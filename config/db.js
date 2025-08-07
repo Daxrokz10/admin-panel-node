@@ -4,9 +4,9 @@ const db = mongoose.mongoose.connect('mongodb+srv://dakshgagnani:sainath96@produ
     useUnifiedTopology: true
 }).then(()=>{
     console.log("Database connected");
-}).catch(()=>{
+}).catch((err)=>{
     console.log("Database could not be connected");
-    console.error(err);
+    console.error(err.message);
 });
 
 
