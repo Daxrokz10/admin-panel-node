@@ -30,5 +30,26 @@ module.exports.viewProduct = async (req, res) => {
 }
 
 module.exports.showEditProduct = async (req, res) => {
-    res.render('pages/editProduct', { id: req.params.id });
+    const product = await Product.findById(req.params.id);
+    if (!product) {
+        return res.status(404).send("Product not found");
+    }else{
+        console.log('Product found:', product);
+        
+    }
+    res.render('pages/editProduct', { product });
+}
+module.exports.editProduct = async (req, res) => {
+    try {
+        const product = await Product.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        if (!product) { 
+            return res.status(404).send("Product not found");
+        }else{
+            console.log('Product updated:', product);
+        }
+        res.redirect('/view'); // Redirect to the view page after editing
+    } catch (error) {
+        console.log('Error updating product:', error);
+        res.status(500).send("Error updating product");
+    } 
 }
