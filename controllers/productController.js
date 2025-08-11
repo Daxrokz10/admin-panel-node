@@ -1,5 +1,26 @@
 const Product = require('../models/productSchema');
 
+
+module.exports.login = (req,res)=>{
+    res.render('pages/loginPage')
+}
+
+module.exports.handleLogin = (req,res)=>{
+    const {email, password} = req.body;
+
+    const demoUser = {
+        email:'dakshgagnani@gmail.com',
+        password:'12345'
+    };
+    if(email === demoUser.email && password === demoUser.password){
+        req.session.user = email;
+        res.redirect('/home');
+    }else{
+        res.render('pages/loginPage', { error: 'Invalid email or password' });
+    }
+
+};
+
 module.exports.home = (req,res)=>{
     res.render('index');
 }
