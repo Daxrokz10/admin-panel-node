@@ -32,7 +32,11 @@ module.exports.showAddProduct = (req,res)=>{
 module.exports.addProduct = async(req,res)=>{
     try{
         const Product = require('../models/productSchema');
-        const product = new Product(req.body);
+        const productData = {
+            ...req.body,
+            image: req.file ? req.file.filename : undefined
+        };
+        const product = new Product(productData);
         await product.save();
         res.redirect('/view'); // Show the form again after saving
     }catch(error){
@@ -73,4 +77,19 @@ module.exports.editProduct = async (req, res) => {
         console.log('Error updating product:', error);
         res.status(500).send("Error updating product");
     } 
+}
+
+module.exports.deleteProduct = async (req, res) => {
+    try {
+        const product = await Product.findByIdAndDelete(req.params.id);
+        if (!product) {
+            return res.status(404).send("Product not found");
+        }
+        console.log('Product deleted:', product);
+        res.redirect('/view'); // Redirect to the view page after deletion
+    }
+    catch (error) {
+        console.log('Error deleting product:', error);
+        res.status(500).send("Error deleting product");
+    }
 }

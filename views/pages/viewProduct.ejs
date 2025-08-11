@@ -91,6 +91,7 @@
                                         <th scope="col">Price</th>
                                         <th scope="col">Category</th>
                                         <th scope="col">Description</th>
+                                        <th scope="col">Image</th>
                                         <th scope="col">Actions</th>
                                     </tr>
                                   </thead>
@@ -102,6 +103,7 @@
                                             <td><%= product.p_price %></td>
                                             <td><%= product.category %></td>
                                             <td><%= product.description %></td>
+                                            <td><img style="height: 50px; width: 70px;" src="/uploads/<%= product.image %>" alt="<%= product.image.title %>"></td>
                                             <td>
                                             <a href="/editProduct/<%= product._id %>" class="btn btn-primary">Edit</a>
                                             <a href="/deleteProduct/<%= product._id %>" class="btn btn-danger">Delete</a>
